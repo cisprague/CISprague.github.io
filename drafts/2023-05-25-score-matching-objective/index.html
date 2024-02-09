@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <!-- Metadata, OpenGraph and Schema.org -->
+    
+
+    <!-- Standard metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>The space of Flow Models | Christopher Iliffe Sprague</title>
+    <meta name="author" content="Christopher Iliffe Sprague">
+    <meta name="description" content="A precise derriavation of the score-matching objective.">
+    <meta name="keywords" content="artificial intelligence, generative models">
+
+
+    <!-- Bootstrap & MDB -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+
+    <!-- Bootstrap Table -->
+    <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
+
+    
+
+    <!-- Styles -->
+    
+    <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="https://cisprague.github.io/drafts/2023-05-25-score-matching-objective/">
+
+    <!-- Dark Mode -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark">
+
+    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/dark_mode.js"></script>
+    
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav ">
+
+    <!-- Header -->
+    <header>
+
+      <!-- Nav Bar -->
+      <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+          <a class="navbar-brand title font-weight-lighter" href="/"><!-- <span class="font-weight-bold">Christopher&nbsp;</span> -->Christopher Iliffe Sprague</a>
+          <!-- Navbar Toggle -->
+          <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+
+          <div class="collapse navbar-collapse text-right" id="navbarNav">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+
+              <!-- About -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/">About</a>
+              </li>
+              
+              <!-- Blog -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/blog/">Blog</a>
+              </li>
+
+              <!-- Other pages -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/publications/">Publications</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/repositories/">Repositories</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/cv/">CV</a>
+              </li>
+
+              <!-- Toogle theme mode -->
+              <li class="toggle-container">
+                <button id="light-toggle" title="Change theme">
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Scrolling Progress Bar -->
+      <progress id="progress" value="0">
+        <div class="progress-container">
+          <span class="progress-bar"></span>
+        </div>
+      </progress>
+    </header>
+
+
+    <!-- Content -->
+    <div class="container mt-5">
+      
+        <!-- _layouts/post.html -->
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">The space of Flow Models</h1>
+    <p class="post-meta">May 25, 2023</p>
+    <p class="post-tags">
+      <a href="/blog/2023"> <i class="fas fa-calendar fa-sm"></i> 2023 </a>
+        ·  
+        <a href="/blog/tag/flow-matching-generative-models">
+          <i class="fas fa-hashtag fa-sm"></i> flow-matching, generative-models</a>  
+          
+        ·  
+        <a href="/blog/category/generative-modelling">
+          <i class="fas fa-tag fa-sm"></i> generative modelling</a>  
+          
+
+    </p>
+  </header>
+
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <h2 id="introduction">Introduction</h2>
+<p>A key task in generative modelling is to generate data similar to some given data.
+Formally speaking, assume:</p>
+<ul>
+  <li>we have a dataset $D \subset \mathbb{R}^n$ (e.g. of images);</li>
+  <li>there exists a probability density function (PDF) $q \in \mathcal{P}(\mathbb{R}^n)$ s.t. $D \subseteq \mathrm{supp}(q)$, where $\mathcal{P}(\mathbb{R}^n)$ is the space of PDFs on $\mathbb{R}^n$.</li>
+</ul>
+
+<p><em>Now the question is: how do we sample from $p$?</em>
+Well, we can try to approximate $p$ with a neural network (NN), but the difficult thing is that the space of PDFs on $\mathbb{R}^n$ is defined as
+\(\mathcal{P}(\mathbb{R}^n) := \left\{f \in C(\mathbb{R}^n, [0,1]) ~\Big\vert \int_\mathbb{R}^n f(\mathbf{x}) \mathrm{d}\mathbf{x} = 1 \right\}.\)
+This predicate is difficult to enforce in practice for NNs as the dimensionality of $\mathbb{R}^n$ increases.</p>
+
+<p>However, in the past few years, <em>flow-based generative models</em> have been used overcome this challenge, whereby, instead of learning $q$, 
+we learn a vector field (VF) $\mathbf{v}<em>\theta \in C^\infty(T\mathbb{R}^n)$ that transports a simple distribution $q_0$ to $q_1$ via its integral map (i.e. flow) $\mathbf{\phi} \in C^\infty(\mathbb{R}^n \times \mathbb{R}</em>{\geq 0}, \mathbb{R}^n)$ through the push-forward equation
+\(p(\mathbf{x}, t) = q_0(\mathbf{\phi}^{-1}(\mathbf{x}, t)) \left\vert  \frac{\partial \mathbf{\phi}^{-1}(\mathbf{x}, t)}{\partial \mathbf{x}}  \right\vert,\)
+s.t. hopefully $p(x, t) \approx q_1(x)$ for some $t \in \mathbb{R}_{\geq 0}$.</p>
+
+<h3 id="cnfs-conditional-cnfs-and-marginal-cnfs">CNFs, Conditional CNFS, and Marginal CNFs</h3>
+
+<p>Here, we will try to give a concise axiomatisation of Flow Matching framework.</p>
+
+<p><strong>Definition (Basic Spaces)</strong></p>
+
+<p>We denote the:</p>
+<ul>
+  <li>state space as \(\mathbb{R}^n\) with \(n \in \mathbb{N}\);</li>
+  <li>time space as \(\mathbb{R}_{\geq 0}\);</li>
+  <li>continuously differentiable function space as \(C^\infty(\cdot, \cdot)\);</li>
+  <li>stationary PDF space as \(\mathcal{P}(\mathbb{R}^n) := \left\{f \in C^\infty(\mathbb{R}^n, [0,1]) ~\Big\vert \int_{\mathbb{R}^n} f(\mathbf{x}) \mathrm{d}\mathbf{x} = 1 \right\}\);</li>
+  <li>dynamic PDF space as \(\mathcal{P}(\mathbb{R}^n \times \mathbb{R}_{\geq 0}) := \left\{f \in C^\infty(\mathbb{R}^n \times \mathbb{R}_{\geq 0}, [0,1]) ~\Big\vert \int_{\mathbb{R}^n} f(\mathbf{x}, t) \mathrm{d}\mathbf{x} = 1 \right\}\).</li>
+</ul>
+
+<p><strong>Problem (Generative modelling)</strong></p>
+
+<p>If there exists:</p>
+<ul>
+  <li>a tractable dataset \(D \subset \mathbb{R}^n\);</li>
+  <li>an intractable stationary PDF \(q_1 \in \mathcal{P}(\mathbb{R}^n)\) s.t. \(D \subseteq \mathrm{supp}(q_1)\);</li>
+  <li>a tractable stationary PDF \(q_0 \in \mathcal{P}(\mathbb{R}^n)\);</li>
+</ul>
+
+<p>how do we sample from \(q_1\)?</p>
+
+<p><strong>Definition (CNF Space)</strong></p>
+
+<p>A set of function pairs</p>
+
+\[\mathfrak{F} :\subset 
+C^\infty(\mathbb{R}^n \times \mathbb{R}_{\geq 0}, \mathbb{R}^n) \times 
+C^\infty(\mathbb{R}^n \times \mathbb{R}_{\geq 0}, \mathbb{R}^n) \times 
+\mathcal{P}(\mathbb{R}^n \times \mathbb{R}_{\geq 0})\]
+
+<p>s.t. for all \((\mathbf{v}, \mathbf{\phi}, p) \in \mathfrak{F}\):</p>
+
+\[\begin{aligned}
+    \frac{\partial \mathbf{\phi}(\mathbf{x}, t)}{\partial t} &amp;= \mathbf{v}(\mathbf{\phi}(\mathbf{x}, t), t) \\
+    \frac{\partial p(\mathbf{x}, t)}{\partial t} &amp;= -\nabla_{\mathbf{x}} \cdot \left( \mathbf{v}(\mathbf{x}, t) p(\mathbf{x}, t) \right).
+\end{aligned}\]
+
+<p>where \(\mathbf{v}\) is a <em>vector field</em>, \(\mathbf{\phi}\) is a <em>flow</em>, and \(p\) is a <em>PDF path</em>. The first condition (ODE equation) says that \(\mathbf{\phi}\) is an integral map of \(\mathbf{v}\), and the second condition (continuity equation) says that \(p\) is generated by \(\mathbf{v}\) (i.e. satisfies the push-forward equation), where \(\nabla_\mathbf{x} \cdot\) denotes the divergence operator.</p>
+
+<p><strong>Definition (Conditional CNF Space)</strong></p>
+
+<p>A set of functions that map from the data space to the CNF space</p>
+
+\[\mathfrak{F}_c :\subset C^\infty(D, \mathfrak{F})\]
+
+<p>s.t. for all \((\mathbf{x}_1, (\mathbf{v}_c, \mathbf{\phi}_c, p_c)) \in D \times \mathfrak{F}_c\) we have \((\mathbf{v}_c(\cdot \mid \mathbf{x}_1), \mathbf{\phi}_c(\cdot \mid \mathbf{x}_1), p_c(\cdot \mid \mathbf{x}_1)) \in \mathfrak{F}\).</p>
+
+<p><strong>Definition (Marginal CNF Space)</strong></p>
+
+<p>A set of CNF and Conditional CNF pairs</p>
+
+\[\mathfrak{F}_m :\subset \mathfrak{F} \times \mathfrak{F}_c\]
+
+<p>s.t. for all \(((\mathbf{v}, \mathbf{\phi}, p), (\mathbf{\phi}_c, \mathbf{v}_c, p_c)) \in \mathfrak{F}_m\):</p>
+
+\[p(\mathbf{x}, t) = \int_{D} p_c(\mathbf{x}, t \mid \mathbf{x}_1) q_1(\mathbf{x}_1) \mathrm{d}\mathbf{x}_1.\]
+
+<p><strong>Theorem (Marginal Vector Field (Lipman))</strong></p>
+
+<p>For all Marginal CNF pairs \(((\mathbf{v}, \mathbf{\phi}, p), (\mathbf{\phi}_c, \mathbf{v}_c, p_c)) \in \mathfrak{F}_m\):</p>
+
+\[\mathbf{v}(\mathbf{x}, t) = \frac{1}{p(\mathbf{x}, t)} \int_{D} \mathbf{v}_c(\mathbf{x}, t \mid \mathbf{x}_1) p_c(\mathbf{x}, t \mid \mathbf{x}_1) q_1(\mathbf{x}_1) \mathrm{d}\mathbf{x}_1.\]
+
+<p><em>Proof</em>:</p>
+
+\[\begin{aligned}
+    \frac{\partial p(\mathbf{x}, t)}{\partial t} &amp;\overset{(i)}{=} \frac{\partial}{\partial t} \int_{D} p_c(\mathbf{x}, t \mid \mathbf{x}_1) q_1(\mathbf{x}_1) \mathrm{d}\mathbf{x}_1 \\
+    &amp;\overset{(ii)}{=}  \int_{D} \frac{\partial p_c(\mathbf{x}, t \mid \mathbf{x}_1)}{\partial t} q_1(\mathbf{x}_1) \mathrm{d}\mathbf{x}_1 \\
+    &amp;\overset{(iii)}{=} \int_{D}
+    \left( -\nabla_{\mathbf{x}} \cdot \left( \mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1) p(\mathbf{x}, t \mid \mathbf{x}_1) \right)\right)
+    q_1(\mathbf{x}_1) \mathrm{d}\mathbf{x}_1 \\
+    &amp;\overset{(iv)}{=} -\nabla_{\mathbf{x}} \cdot \int_{D}
+      \mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1) p(\mathbf{x}, t \mid \mathbf{x}_1)
+    q_1(\mathbf{x}_1) \mathrm{d}\mathbf{x}_1 \\
+    &amp;\overset{(v)}{=} -\nabla_{\mathbf{x}} \cdot \left( \mathbf{v}(\mathbf{x}, t) p(\mathbf{x}, t) \right)\\
+\end{aligned}\]
+
+<p>where \((i)\) is by the definition of the Marginal CNF Space, \((ii)\) is by the Leibniz integral rule, \((iii)\) is by the definition of the CNF Space, \((iv)\) is by the Leibniz integral rule, and \((v)\) is the statement of the theorem.</p>
+
+    </div>
+  </article>
+
+
+</div>
+
+      
+    </div>
+
+    <!-- Footer -->    
+    <footer class="fixed-bottom">
+      <div class="container mt-0">
+        © Copyright 2024 Christopher Iliffe Sprague. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme.
+Last updated: February 09, 2024.
+      </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Bootsrap & MDB scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+
+    <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script defer src="/assets/js/masonry.js" type="text/javascript"></script>
+    
+  <!-- Medium Zoom JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script defer src="/assets/js/zoom.js"></script>
+
+  <!-- Bootstrap Table -->
+  <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+  <!-- Load Common JS -->
+  <script src="/assets/js/no_defer.js"></script>
+  <script defer src="/assets/js/common.js"></script>
+  <script defer src="/assets/js/copy_code.js" type="text/javascript"></script>
+
+    
+  <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+  <script async src="https://badge.dimensions.ai/badge.js"></script>
+
+    <!-- MathJax -->
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        tags: 'ams'
+      }
+    };
+  </script>
+  <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    
+    
+
+<!-- Scrolling Progress Bar -->
+<script type="text/javascript">
+  /*
+   * This JavaScript code has been adapted from the article 
+   * https://css-tricks.com/reading-position-indicator/ authored by Pankaj Parashar, 
+   * published on the website https://css-tricks.com on the 7th of May, 2014.
+   * Couple of changes were made to the original code to make it compatible 
+   * with the `al-foio` theme.
+   */
+  const progressBar = $("#progress");
+  /*
+   * We set up the bar after all elements are done loading.
+   * In some cases, if the images in the page are larger than the intended
+   * size they'll have on the page, they'll be resized via CSS to accomodate
+   * the desired size. This mistake, however, breaks the computations as the
+   * scroll size is computed as soon as the elements finish loading.
+   * To account for this, a minimal delay was introduced before computing the
+   * values.
+   */
+  window.onload = function () {
+    setTimeout(progressBarSetup, 50);
+  };
+  /*
+   * We set up the bar according to the browser.
+   * If the browser supports the progress element we use that.
+   * Otherwise, we resize the bar thru CSS styling
+   */
+  function progressBarSetup() {
+    if ("max" in document.createElement("progress")) {
+      initializeProgressElement();
+      $(document).on("scroll", function() {
+        progressBar.attr({ value: getCurrentScrollPosition() });
+      });
+      $(window).on("resize", initializeProgressElement);
+    } else {
+      resizeProgressBar();
+      $(document).on("scroll", resizeProgressBar);
+      $(window).on("resize", resizeProgressBar);
+    }
+  }
+  /*
+   * The vertical scroll position is the same as the number of pixels that
+   * are hidden from view above the scrollable area. Thus, a value > 0 is
+   * how much the user has scrolled from the top
+   */
+  function getCurrentScrollPosition() {
+    return $(window).scrollTop();
+  }
+
+  function initializeProgressElement() {
+    let navbarHeight = $("#navbar").outerHeight(true);
+    $("body").css({ "padding-top": navbarHeight });
+    $("progress-container").css({ "padding-top": navbarHeight });
+    progressBar.css({ top: navbarHeight });
+    progressBar.attr({
+      max: getDistanceToScroll(),
+      value: getCurrentScrollPosition(),
+    });
+  }
+  /*
+   * The offset between the html document height and the browser viewport
+   * height will be greater than zero if vertical scroll is possible.
+   * This is the distance the user can scroll
+   */
+  function getDistanceToScroll() {
+    return $(document).height() - $(window).height();
+  }
+
+  function resizeProgressBar() {
+    progressBar.css({ width: getWidthPercentage() + "%" });
+  }
+  // The scroll ratio equals the percentage to resize the bar
+  function getWidthPercentage() {
+    return (getCurrentScrollPosition() / getDistanceToScroll()) * 100;
+  }
+</script>
+
+  </body>
+</html>
