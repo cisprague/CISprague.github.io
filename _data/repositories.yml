@@ -1,0 +1,12 @@
+# github_users:
+#   - cisprague
+
+github_repos:
+  - esa/pykep
+  - cisprague/Spacecraft_Testbed
+  - cisprague/Astro.IQ
+  - cisprague/pointnetkl
+  - cisprague/diffusion-practical-public
+  - cisprague/bts-2021
+  - cisprague/dubins
+  - cisprague/Design_Optimization

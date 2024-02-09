@@ -1,0 +1,144 @@
+- title: General Information
+  type: map
+  contents:
+    - name: Full Name
+      value: Christopher Iliffe Sprague
+    - name: Date of Birth
+      value: 1995/01/19
+    - name: Languages
+      value: English (native), Swedish (B1), Spanish (A1)
+    - name: Citizenships
+      value: United Kingdom, United States of America.
+    - name: Address
+      value: Teknikringen 14, 114 28 Stockholm, Sweden
+    - name: Email
+      value: sprague (at) kth (dot) se
+
+- title: Education
+  type: time_table
+  contents:
+    - title: PhD
+      institution: KTH Royal Institute of Technology, Stockholm, Sweden | Robotics, Perception and Learning Department
+      year: 2022
+      description:
+        - Thesis titled "Efficient and Trustworthy Artificial Intelligence for Critical Robotic Systems".
+    - title: MS
+      institution: Rensselar Polytechnic Institute, Troy, NY, USA | Mechanical, Aerospace, Nuclear, and Electrical Engineering Department
+      year: 2017
+      description:
+        - Thesis titled "Towards intelligent trajectory optimisation in astrodynamics".
+    - title: BS
+      institution: Rensselar Polytechnic Institute, Troy, NY, USA | Mechanical, Aerospace, Nuclear, and Electrical Engineering Department
+      year: 2016
+      description:
+        - Focus on fluid, solid mechanics, and control theory.
+
+- title: Experience
+  type: time_table
+  contents:
+
+    - title: Postdoctoral Researcher
+      institution: SciLifeLab, Stockholm, Sweden
+      year: Jun 2022 - Now
+      description:
+        - Researching inductive bias for ML-based prediction of molecular interactions (adv. Hossein Azizpour \& Arne Elofsson).
+        - Benchmarked the robustness of SOTA ML-based docking models on apo and holo receptor structure variations (esp. with backbone variations, e.g. in GPCRs).
+        - Benchmarked SOTA ML-based docking models on drug screening with decoys (i.e. DUDE-Z dataset).
+        - Currently working on endowing diffusion generative models with stability and robustness guarantees with stochastic port Hamiltonian systems (e.g. for stable multi-modal docking or folding).
+
+    - title: Doctoral Researcher
+      institution: Robotics, Perception and Learning Lab, KTH Royal Institute of Technology, Stockholm, Sweden
+      year: Dec 2017 - Jun 2022
+      description:
+        - Published research (100+ citations) in the intersections of control theory, machine learning, perception, and planning (advised by Petter Ögren and John Folkesson).
+        - Developed planning and computer vision algorithms for multiple AUV scenarios in ROS, collaborated with a team of researchers to integrate them with other subsystems (e.g. control, perception, localisation), and tested them in simulation and real life.
+        - Led workshops and presented research at conferences and seminars.
+        - Presented robotic demonstrations to industrial and governmental stakeholders of the Swedish Maritime Robotics Centre.
+        - Supervised multiple M.Sc. students to the completion of their theses.
+        - Developed and presented robotic planning assignments in a course of 200+ students over 4 semesters.
+        - Led help sessions in robotics and machine learning courses.
+        - Amplified research visibility with media outreach and social media.
+
+    - title: Autonomous Underwater Vehicle (AUV) Technical Assistant
+      institution: University of Tasmania (UTAS), Hobart, Tasmania, Australia | Institute for Marine and Antarctic Studies (IMAS)
+      year: Dec 2019 - Feb 2020
+      description:
+        - Worked on deploying the Nupiri Muka AUV near Thwaites glacier for under-ice data collection during the Korean Polar Research Institute's Winter 2019-2020 Antarctic expedition (advised by Peter King).
+        - Worked on recovering Gothenburg University's oceanographic moorings.
+
+    - title: Researcher
+      institution: European Space Agency, Noordwijk, Netherlands | Advanced Concepts Team
+      year: Sep 2017 - Nov 2017
+      description:
+        - Published research in the intersection of spacecraft trajectory optimisation and machine learning (advised by Dario Izzo).
+
+    - title: Researcher
+      institution: Japan Aerospace Exploration Agency (JAXA), Sagamihara, Japan | Institute of Space and Astronautical Science (ISAS)
+      year: Jun 2017 - Aug 2017
+      description:
+        - Researched machine learning for trajectory optimisation in the context of the lunar spacecraft mission EQUULEUS (advised by Yasuhiro Kawakatsu).
+        - Awarded East Asia and Pacific Summer Institute Fellowship ($5400) by the National Science Foundation and Summer Fellowship (¥692500) by the Japan Society for the Promotion of Science.
+
+    - title: Learning Assistant
+      institution: Rensselar Polytechnic Institute, Troy, NY, USA
+      year: Aug 2016 - May 2017
+      description:
+        - Held consultation sessions and created a variety of workshops for study skills, time management, and stress management in order to promote academic excellence and encourage student involvement.
+
+    - title: Software Engineering Intern
+      institution: National Aeronautics and Space Administration (NASA)
+      year: Aug 2016 - May 2017
+      description:
+        - Produced targeted enhancements to the fault-protection systems of NASA's Solar Terrestrial Relations Observatory (advised by Dan Wilson and Kevin Balon).
+        - Updated the spacecrafts' testbeds to emulate their current operational modes.
+        - Awarded NASA Johns Hopkins Applied Physics Laboratory Fellowship ($4000) by The Henry Foundation Inc.
+
+- title: Selected Open-Sourced Projects
+  type: time_table
+  contents:
+    - title: <a href="https://github.com/cisprague/pointnetkl">PointNetKL</a>
+      year: Apr 2020 - May 2020
+      description: A PyTorch implementation of PointNetKL, a novel neural network architecture for the prediction of the uncertainty of generalized iterative closest point (ICP) algorithms for simultaneous localisation and mapping (SLAM). The code is used to produce the results in the paper <a href="https://github.com/cisprague/pointnetkl">PointNetKL</a>.
+    - title: <a href="https://github.com/esa/pykep">PyKep</a>
+      year: Sep 2017 - Nov 2017
+      description: PyKep is a scientific library providing basic tools for astrodynamics research. I contributed to the project by adding the <a href="https://github.com/esa/pykep/tree/master/pykep/pontryagin">Pontryagin</a> module (<a href="http://esa.github.io/pykep/documentation/pontryagin.html">documentation</a>), which provides a Python interface to trajectory optimisation algorithms based on the Pontryagin Maximum Principle.
+    - title: <a href="https://github.com/cisprague/Astro.IQ">Astro.IQ</a>
+      year: Mar 2017 - May 2017
+      description: A library implementing various machine learning techniques and trajectory optimisation techniques in astrodynamics problems (<a href="https://cisprague.github.io/Astro.IQ/">documentation</a>). Used to produce the results in my MS thesis.
+    - title: <a href="https://github.com/cisprague/Spacecraft_Testbed">Spacecraft Testbed</a>
+      year: Apr 2016 - Mar 2017
+      description: A library that models both the geocentric and interplanetary environment with the aim to facilitate the testing and development of various types spacecraft guidance, navigation, and control schemes.
+
+- title: Selected Open-Source Tutorials
+  type: time_table
+  contents:
+    - title: <a href="https://github.com/cisprague/diffusion-practical-public">Tutorial on score-based diffusion models using JAX and Haiku</a>
+      year: May 2023
+      description: A Jupyter notebook tutorial on score-based diffusion models with <a href="https://github.com/google/jax">JAX</a> and <a href="https://github.com/deepmind/dm-haiku">Haiku</a>, which are a class of generative models that can be trained learn the reverse-time dynamics of a diffusion process. The tutorial is based on the papers <a href="https://jmlr.org/papers/v6/hyvarinen05a.html">Score-Based Generative Modeling through Stochastic Differential Equations</a> and <a href="https://jmlr.org/papers/v6/hyvarinen05a.html">Estimation of Non-Normalized Statistical Models by Score Matching</a>.
+    - title: <a href="https://github.com/cisprague/bts-2021">Tutorial on system identification using JAX, Haiku, and Optax</a>
+      year: Sep 2021
+      description: A Jupyter notebook tutorial on learning the damping matrix of an autonomous underwater vehicle's dynamics. The tutorial presents how to efficiently define a machine learning model for the dynamics of the system and how to train the model. Presented at the <a href="https://bts.fer.hr/program-2021/">Breaking the Surface 2021</a> in our <a href="http://bts.fer.hr/session/tutorial-using-physics-informed-learning-for-nonlinear-system-identification-of-underwater-robots/">tutorial</a>.
+    - title: <a href="https://github.com/cisprague/dubins">Robotic Planning Assignment for DD2410 Introduction to Robotics</a>
+      year: Sep 2018 - Dec 2020
+      description: An assignment on planning the trajectory of a <a href="http://lavalle.pl/planning/node821.html">Dubins car</a>, which is a simple model of a car that moves forward at a constant speed and can only turn at a fixed rate. The assignment tasks students with implementing a planning algorithm to navigate the system from a start to a goal state while avoiding obstacles. Developed for the <a href="https://www.kth.se/student/kurser/kurs/DD2410?l=en">Robotic Planning Assignment for DD2410 Introduction to Robotics</a> at KTH Royal Institute of Technology.
+    - title: <a href="https://github.com/cisprague/Design_Optimization">Applications of Nonlinear Design Optimisation</a>
+      year: Sep 2016 - Feb 2017
+      description: Various design optimization applications implemented in MATLAB, including heat exchanger design, wing design, and rocket landing trajectory optimisation (<a href="https://cisprague.github.io/Design_Optimization/">documentation</a>). Developed during the MANE 4280 Design Optimization course at Renesselaer Polytechnic Institute.
+    
+
+- title: Honors and Awards
+  type: time_table
+  contents:
+    - year: 2017
+      items: 
+       - <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1713973&HistoricalAwards=false">East Asia and Pacific Summer Institute Fellowship</a> ($5400) by the National Science Foundation.
+       - Summer Fellowship (¥692500) by the Japan Society for the Promotion of Science.
+    - year: 2016
+      items: 
+        - NASA Johns Hopkins Applied Physics Laboratory Fellowship ($4000) by The Henry Foundation Inc.
+
+
+- title: Other Interests
+  type: list
+  contents:
+    - <b>Hobbies:</b> Running, weightlifting, cycling, hiking, travelling.
