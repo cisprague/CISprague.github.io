@@ -1,22 +1,163 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://cisprague.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cisprague.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2024-02-14T15:55:16+00:00</updated><id>https://cisprague.github.io/feed.xml</id><title type="html">blank</title><subtitle>Personal website of Christopher Iliffe Sprague.
-</subtitle><entry><title type="html">Flow matching and differential inclusions</title><link href="https://cisprague.github.io/blog/2024/flow-matching-differential-inclusions/" rel="alternate" type="text/html" title="Flow matching and differential inclusions" /><published>2024-02-09T10:00:00+00:00</published><updated>2024-02-09T10:00:00+00:00</updated><id>https://cisprague.github.io/blog/2024/flow-matching-differential-inclusions</id><content type="html" xml:base="https://cisprague.github.io/blog/2024/flow-matching-differential-inclusions/"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Generative_model">Generative modeling</a> is a fundamental concept in machine learning, where you typically want to create a model that can generate samples from some complex distribution (e.g. golden retreiver images).
-Recently, a new type of generative modelling framework, called <a href="https://arxiv.org/abs/2210.02747">flow matching</a>, has been proposed as an alternative to <a href="https://arxiv.org/abs/2011.13456">diffusion models</a> that enjoys fast training and sampling.
-Flow matching relies on the framework of <a href="https://arxiv.org/abs/1806.07366">continuous normalizing flows (CNFs)</a>, where you learn a model of a time-dependent <a href="https://en.wikipedia.org/wiki/Vector_field">vector field</a> \(\mathbf{v}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\) and then use it to transport samples from a simple distribution \(q_0\) (e.g. a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">normal distribution</a>) to samples of a more complex distribution \(q_1\) (e.g. golden retreiver images), like I have shown below with my fantastic artistic skills…</p>
+<!DOCTYPE html>
+<html lang="en">
+
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <!-- Metadata, OpenGraph and Schema.org -->
+    
+
+    <!-- Standard metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Flow matching and differential inclusions | Christopher Iliffe Sprague</title>
+    <meta name="author" content="Christopher Iliffe Sprague">
+    <meta name="description" content="An interesting connection between flow matching, differential inclusions, hybrid dynamical systems, and discontinuous dynamical systems..">
+    <meta name="keywords" content="artificial intelligence, generative models">
+
+
+    <!-- Bootstrap & MDB -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+
+    <!-- Bootstrap Table -->
+    <link defer rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
+
+    
+
+    <!-- Styles -->
+    
+    <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="https://cisprague.github.io/blog/2024/flow-matching-differential-inclusions/">
+
+    <!-- Dark Mode -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark">
+
+    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/dark_mode.js"></script>
+    
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav ">
+
+    <!-- Header -->
+    <header>
+
+      <!-- Nav Bar -->
+      <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+          <a class="navbar-brand title font-weight-lighter" href="/"><!-- <span class="font-weight-bold">Christopher&nbsp;</span> -->Christopher Iliffe Sprague</a>
+          <!-- Navbar Toggle -->
+          <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+
+          <div class="collapse navbar-collapse text-right" id="navbarNav">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+
+              <!-- About -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/">About</a>
+              </li>
+              
+              <!-- Blog -->
+              <li class="nav-item active">
+                <a class="nav-link" href="/blog/">Blog<span class="sr-only">(current)</span></a>
+              </li>
+
+              <!-- Other pages -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/publications/">Publications</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/repositories/">Repositories</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/cv/">CV</a>
+              </li>
+
+              <!-- Toogle theme mode -->
+              <li class="toggle-container">
+                <button id="light-toggle" title="Change theme">
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Scrolling Progress Bar -->
+      <progress id="progress" value="0">
+        <div class="progress-container">
+          <span class="progress-bar"></span>
+        </div>
+      </progress>
+    </header>
+
+
+    <!-- Content -->
+    <div class="container mt-5">
+      
+        <!-- _layouts/post.html -->
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Flow matching and differential inclusions</h1>
+    <p class="post-meta">February 9, 2024</p>
+    <p class="post-tags">
+      <a href="/blog/2024"> <i class="fas fa-calendar fa-sm"></i> 2024 </a>
+        ·  
+        <a href="/blog/tag/flow-matching">
+          <i class="fas fa-hashtag fa-sm"></i> flow-matching,</a>  
+          <a href="/blog/tag/generative-models">
+          <i class="fas fa-hashtag fa-sm"></i> generative-models,</a>  
+          <a href="/blog/tag/control-theory">
+          <i class="fas fa-hashtag fa-sm"></i> control-theory</a>  
+          
+
+    </p>
+  </header>
+
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p><a href="https://en.wikipedia.org/wiki/Generative_model" rel="external nofollow noopener" target="_blank">Generative modeling</a> is a fundamental concept in machine learning, where you typically want to create a model that can generate samples from some complex distribution (e.g. golden retreiver images).
+Recently, a new type of generative modelling framework, called <a href="https://arxiv.org/abs/2210.02747" rel="external nofollow noopener" target="_blank">flow matching</a>, has been proposed as an alternative to <a href="https://arxiv.org/abs/2011.13456" rel="external nofollow noopener" target="_blank">diffusion models</a> that enjoys fast training and sampling.
+Flow matching relies on the framework of <a href="https://arxiv.org/abs/1806.07366" rel="external nofollow noopener" target="_blank">continuous normalizing flows (CNFs)</a>, where you learn a model of a time-dependent <a href="https://en.wikipedia.org/wiki/Vector_field" rel="external nofollow noopener" target="_blank">vector field</a> \(\mathbf{v}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\) and then use it to transport samples from a simple distribution \(q_0\) (e.g. a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution" rel="external nofollow noopener" target="_blank">normal distribution</a>) to samples of a more complex distribution \(q_1\) (e.g. golden retreiver images), like I have shown below with my fantastic artistic skills…</p>
 
 <figure style="text-align: center;">
-  <img src="../../../assets/img/transport.jpg" alt="Probability distributions" title="Probability distributions" width="90%" />
+  <img src="../../../assets/img/transport.jpg" alt="Probability distributions" title="Probability distributions" width="90%">
   <figcaption><strong>Figure</strong>: The transportation of a simple distribution \(q_0\) to a more complex distribution \(q_1\).</figcaption>
 </figure>
 
-<p>Theoretically, this transportation of samples obeys the well-known <a href="https://en.wikipedia.org/wiki/Continuity_equation">continuity equation</a> from physics:</p>
+<p>Theoretically, this transportation of samples obeys the well-known <a href="https://en.wikipedia.org/wiki/Continuity_equation" rel="external nofollow noopener" target="_blank">continuity equation</a> from physics:</p>
 
 \[\frac{\partial p(\mathbf{x}, t)}{\partial t} = -\nabla_\mathbf{x} \cdot \left(\mathbf{v}(\mathbf{x}, t) p(\mathbf{x}, t)\right), \qquad \text{(Continuity)}\]
 
-<p>where \(p : \mathbb{R}^n \times \mathbb{R}_{\geq0} \to \mathbb{R}_{\geq 0}\) is a time-dependent “density” and \(\nabla_\mathbf{x} \cdot\) is the <a href="https://en.wikipedia.org/wiki/Divergence">divergence operator</a>. This equation essentially says that the total mass of the system does not change over time.
-In our case, this “mass” is just the total probability of the space, which aligns with the property of <a href="https://en.wikipedia.org/wiki/Probability_density_function">probability density functions (PDFs)</a> that \(\int_{\mathcal{X}} p(\mathbf{x}, t) \mathrm{d}\mathbf{x} = 1\). See another fantastic art piece below for an illustration.</p>
+<p>where \(p : \mathbb{R}^n \times \mathbb{R}_{\geq0} \to \mathbb{R}_{\geq 0}\) is a time-dependent “density” and \(\nabla_\mathbf{x} \cdot\) is the <a href="https://en.wikipedia.org/wiki/Divergence" rel="external nofollow noopener" target="_blank">divergence operator</a>. This equation essentially says that the total mass of the system does not change over time.
+In our case, this “mass” is just the total probability of the space, which aligns with the property of <a href="https://en.wikipedia.org/wiki/Probability_density_function" rel="external nofollow noopener" target="_blank">probability density functions (PDFs)</a> that \(\int_{\mathcal{X}} p(\mathbf{x}, t) \mathrm{d}\mathbf{x} = 1\). See another fantastic art piece below for an illustration.</p>
 
 <figure style="text-align: center;">
-  <img src="../../../assets/img/continuity.jpg" alt="Probability distributions" title="Probability distributions" width="90%" />
+  <img src="../../../assets/img/continuity.jpg" alt="Probability distributions" title="Probability distributions" width="90%">
   <figcaption><strong>Figure</strong>: The continuity equation preserves the total mass of the PDF!</figcaption>
 </figure>
 
@@ -34,17 +175,17 @@ Essentially, this is just a theoretical justification saying that we can sample 
 See another drawing below!</p>
 
 <figure style="text-align: center;">
-  <img src="../../../assets/img/flow_map.jpg" width="90%" />
+  <img src="../../../assets/img/flow_map.jpg" width="90%">
   <figcaption><strong>Figure</strong>: The flow map from \(t = 0\) to \(t = T\).</figcaption>
 </figure>
 
 <p>Okay, but there is one big problem here: how do we actually learn a model of such a vector field  \(\mathbf{v}\) if we only have samples from the simple and complex PDFs, \(q_0\) and \(q_1\)?
-Well, the <a href="https://arxiv.org/abs/2210.02747">flow matching (FM)</a> authors proposed learning from intermediate samples of a conditional PDF \(p(\mathbf{x}, t \mid \mathbf{x}_1)\) that converges to a concentrated PDF (i.e. a <a href="https://en.wikipedia.org/wiki/Dirac_delta_function">Dirac delta distribution</a> \(\delta\)) around each data sample \(\mathbf{x}_1 \sim q_1\) such that it locally emulates the desired PDF (see drawing below), i.e.</p>
+Well, the <a href="https://arxiv.org/abs/2210.02747" rel="external nofollow noopener" target="_blank">flow matching (FM)</a> authors proposed learning from intermediate samples of a conditional PDF \(p(\mathbf{x}, t \mid \mathbf{x}_1)\) that converges to a concentrated PDF (i.e. a <a href="https://en.wikipedia.org/wiki/Dirac_delta_function" rel="external nofollow noopener" target="_blank">Dirac delta distribution</a> \(\delta\)) around each data sample \(\mathbf{x}_1 \sim q_1\) such that it locally emulates the desired PDF (see drawing below), i.e.</p>
 
 \[\exists T \in \mathbb{R}_{\geq 0} \quad \text{s.t.} \quad \lim_{t \to T} p(\mathbf{x}, t \mid \mathbf{x}_1) \approx \delta(\mathbf{x} - \mathbf{x}_1). \qquad \text{(Emulation)}\]
 
 <figure style="text-align: center;">
-  <img src="../../../assets/img/conditional_pdf.jpg" width="90%" />
+  <img src="../../../assets/img/conditional_pdf.jpg" width="90%">
   <figcaption><strong>Figure</strong>: \(q_0\) being transported to \(\delta(\mathbf{x} - \mathbf{x}_1)\) for each \(\mathbf{x}_1 \sim q_1\).</figcaption>
 </figure>
 
@@ -78,7 +219,7 @@ With this assumption, they are then able to identify a <strong>marginal vector f
 
 <p>where the FM loss matches the NN VF to the unknown desired VF \(\mathbf{v}(\mathbf{x}, t)\) (what we originally wanted to do) and the CFM loss matches the NN VF to the conditional VFs \(\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)\).
 Since these losses are equal up to a constant, minimising them to convergence should, in theory, result in the same NN VF \(\mathbf{v}_\theta(\mathbf{x}, t)\).
-Check Theorem 1 and Theorem 2 of the <a href="https://arxiv.org/abs/2210.02747">FM paper</a> to see the original proof of the marginal VF and CFM loss equivalence.</p>
+Check Theorem 1 and Theorem 2 of the <a href="https://arxiv.org/abs/2210.02747" rel="external nofollow noopener" target="_blank">FM paper</a> to see the original proof of the marginal VF and CFM loss equivalence.</p>
 
 <p>The interesting thing about the marginal VF \(\mathbf{v}(\mathbf{x}, t)\) is that, similar to the marginal PDF \(p(\mathbf{x}, t \mid \mathbf{x}_1)\), it is a mixture of conditinonal VFs \(\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)\).
 What does this “mixture” actually mean?
@@ -87,30 +228,30 @@ But, for the marginal VF, it is a bit less clear, but qualitateively it is some 
 
 \[\frac{1}{p(\mathbf{x}, t)} \int_{\mathcal{X}_1} p(\mathbf{x}, t \mid \mathbf{x}_1) q(\mathbf{x}_1) \mathrm{d}\mathbf{x}_1 = \frac{p(\mathbf{x}, t)}{p(\mathbf{x}, t)} = 1.\]
 
-<p>This means that, in fact, the marginal VF is a <a href="https://en.wikipedia.org/wiki/Convex_combination">convex combination</a> of the conditional VF, where the weights are all positive (PDF property) and the weights sum to \(1\).
-Since the marginal VF admits a flow map, we then have a <a href="https://en.wikipedia.org/wiki/Differential_inclusion">differential inclusion</a>:</p>
+<p>This means that, in fact, the marginal VF is a <a href="https://en.wikipedia.org/wiki/Convex_combination" rel="external nofollow noopener" target="_blank">convex combination</a> of the conditional VF, where the weights are all positive (PDF property) and the weights sum to \(1\).
+Since the marginal VF admits a flow map, we then have a <a href="https://en.wikipedia.org/wiki/Differential_inclusion" rel="external nofollow noopener" target="_blank">differential inclusion</a>:</p>
 
 \[\frac{\mathrm{d} \mathbf{\phi}(\mathbf{x}, t)}{\mathrm{d} t} \in \mathrm{co} \left\{\mathbf{v}(\mathbf{\phi}(\mathbf{x}, t), t \mid \mathbf{x}_1) \mid \mathbf{x}_1 \sim q_1 \right\}, \qquad \text{(Differential Inclusion)}\]
 
-<p>where \(\mathrm{co}\) is the <a href="https://en.wikipedia.org/wiki/Convex_hull">convex hull operator</a>, which gives the set of all possible convex combinations.
+<p>where \(\mathrm{co}\) is the <a href="https://en.wikipedia.org/wiki/Convex_hull" rel="external nofollow noopener" target="_blank">convex hull operator</a>, which gives the set of all possible convex combinations.
 Take a look at the drawing below.</p>
 
 <figure style="text-align: center;">
-  <img src="../../../assets/img/marginal_vf.jpg" width="90%" />
+  <img src="../../../assets/img/marginal_vf.jpg" width="90%">
   <figcaption><strong>Figure</strong>: The marginal VF lies in some convex combination of the conditional VFs (red).</figcaption>
 </figure>
 
-<p>Differential inclusions were introduced in the 1960s by <a href="https://en.wikipedia.org/wiki/Aleksei_Filippov_(mathematician)">Aleksei Filippov</a> as a way to characterise solution to ODEs with discontinuous vector fields (see Filippov’s <a href="https://link.springer.com/book/10.1007/978-94-015-7793-9">book</a>).
+<p>Differential inclusions were introduced in the 1960s by <a href="https://en.wikipedia.org/wiki/Aleksei_Filippov_(mathematician)" rel="external nofollow noopener" target="_blank">Aleksei Filippov</a> as a way to characterise solution to ODEs with discontinuous vector fields (see Filippov’s <a href="https://link.springer.com/book/10.1007/978-94-015-7793-9" rel="external nofollow noopener" target="_blank">book</a>).
 They are an integral part of discontinuous dynamical systems (DDSs), where several VFs interface on a partitioned domain (see my drawing below).
-I recommend Jorge Cortes’ <a href="https://ieeexplore.ieee.org/abstract/document/4518905">article</a> for a complete description.</p>
+I recommend Jorge Cortes’ <a href="https://ieeexplore.ieee.org/abstract/document/4518905" rel="external nofollow noopener" target="_blank">article</a> for a complete description.</p>
 
 <figure style="text-align: center;">
-  <img src="../../../assets/img/dds.jpg" width="90%" />
+  <img src="../../../assets/img/dds.jpg" width="90%">
   <figcaption><strong>Figure</strong>: A DDS with \(\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_i)\) over \(\Omega_i \subset \mathbb{R}^n\) and \(\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_j)\) over \(\Omega_j \subset \mathbb{R}^n\), such that \(\Omega_i \cap \Omega_j = \emptyset\) and \(\Omega_i \cup \Omega_j = \mathbb{R}^n\). A Filippov solution will involve a convex combination of the VFs on the switching boundary \(\partial \Omega_i \cup \partial \Omega_j\).</figcaption>
 </figure>
 
-<p>DDSs with differential inclusions are commonplace in <a href="https://en.wikipedia.org/wiki/Hybrid_system">hybrid dynamical systems (HDSs)</a>, such as switched systems or <a href="https://arxiv.org/abs/2109.01575">behavior trees (BTs)</a> (shamless plug to my PhD research).
-I recommend Daniel Liberzon’s <a href="http://liberzon.csl.illinois.edu/teaching/Liberzon-LectureNotes.pdf">lecture</a> on switched systems.</p>
+<p>DDSs with differential inclusions are commonplace in <a href="https://en.wikipedia.org/wiki/Hybrid_system" rel="external nofollow noopener" target="_blank">hybrid dynamical systems (HDSs)</a>, such as switched systems or <a href="https://arxiv.org/abs/2109.01575" rel="external nofollow noopener" target="_blank">behavior trees (BTs)</a> (shamless plug to my PhD research).
+I recommend Daniel Liberzon’s <a href="http://liberzon.csl.illinois.edu/teaching/Liberzon-LectureNotes.pdf" rel="external nofollow noopener" target="_blank">lecture</a> on switched systems.</p>
 
 <p>Switched systems are particularly relevant to the marginal VF \(\mathbf{v}(\mathbf{x}, t)\) discussed above.
 In switched systems, there is a “switching signal” the indicates which VF to use (the conditional VFs \(\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)\) in our case).
@@ -321,4 +462,144 @@ $$
     p(\mathbf{x}, t) &\approx \int p(\mathbf{x} \mid \mathbf{x}_1) q_1(\mathbf{x}_1) \mathrm{d} \mathbf{x}_1 \qquad \text{(Marginal PDF)} \\
     \mathbf{v}(\mathbf{x}, t) &\approx \frac{1}{p(\mathbf{x}, t)} \int \mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1) p(\mathbf{x}, t \mid \mathbf{x}_1) q_1(\mathbf{x}_1) \mathrm{d} \mathbf{x}_1 \qquad \text{(Marginal VF)}
   \end{aligned}
-$$ -->]]></content><author><name></name></author><category term="flow-matching," /><category term="generative-models," /><category term="control-theory" /><summary type="html"><![CDATA[An interesting connection between flow matching, differential inclusions, hybrid dynamical systems, and discontinuous dynamical systems..]]></summary></entry></feed>
+$$ -->
+
+    </div>
+  </article>
+
+
+</div>
+
+      
+    </div>
+
+    <!-- Footer -->    
+    <footer class="fixed-bottom">
+      <div class="container mt-0">
+        © Copyright 2024 Christopher Iliffe Sprague. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme.
+Last updated: February 14, 2024.
+      </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Bootsrap & MDB scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+
+    <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script defer src="/assets/js/masonry.js" type="text/javascript"></script>
+    
+  <!-- Medium Zoom JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script defer src="/assets/js/zoom.js"></script>
+
+  <!-- Bootstrap Table -->
+  <script defer src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+  <!-- Load Common JS -->
+  <script src="/assets/js/no_defer.js"></script>
+  <script defer src="/assets/js/common.js"></script>
+  <script defer src="/assets/js/copy_code.js" type="text/javascript"></script>
+
+    
+  <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+  <script async src="https://badge.dimensions.ai/badge.js"></script>
+
+    <!-- MathJax -->
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        tags: 'ams'
+      }
+    };
+  </script>
+  <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    
+    
+
+<!-- Scrolling Progress Bar -->
+<script type="text/javascript">
+  /*
+   * This JavaScript code has been adapted from the article 
+   * https://css-tricks.com/reading-position-indicator/ authored by Pankaj Parashar, 
+   * published on the website https://css-tricks.com on the 7th of May, 2014.
+   * Couple of changes were made to the original code to make it compatible 
+   * with the `al-foio` theme.
+   */
+  const progressBar = $("#progress");
+  /*
+   * We set up the bar after all elements are done loading.
+   * In some cases, if the images in the page are larger than the intended
+   * size they'll have on the page, they'll be resized via CSS to accomodate
+   * the desired size. This mistake, however, breaks the computations as the
+   * scroll size is computed as soon as the elements finish loading.
+   * To account for this, a minimal delay was introduced before computing the
+   * values.
+   */
+  window.onload = function () {
+    setTimeout(progressBarSetup, 50);
+  };
+  /*
+   * We set up the bar according to the browser.
+   * If the browser supports the progress element we use that.
+   * Otherwise, we resize the bar thru CSS styling
+   */
+  function progressBarSetup() {
+    if ("max" in document.createElement("progress")) {
+      initializeProgressElement();
+      $(document).on("scroll", function() {
+        progressBar.attr({ value: getCurrentScrollPosition() });
+      });
+      $(window).on("resize", initializeProgressElement);
+    } else {
+      resizeProgressBar();
+      $(document).on("scroll", resizeProgressBar);
+      $(window).on("resize", resizeProgressBar);
+    }
+  }
+  /*
+   * The vertical scroll position is the same as the number of pixels that
+   * are hidden from view above the scrollable area. Thus, a value > 0 is
+   * how much the user has scrolled from the top
+   */
+  function getCurrentScrollPosition() {
+    return $(window).scrollTop();
+  }
+
+  function initializeProgressElement() {
+    let navbarHeight = $("#navbar").outerHeight(true);
+    $("body").css({ "padding-top": navbarHeight });
+    $("progress-container").css({ "padding-top": navbarHeight });
+    progressBar.css({ top: navbarHeight });
+    progressBar.attr({
+      max: getDistanceToScroll(),
+      value: getCurrentScrollPosition(),
+    });
+  }
+  /*
+   * The offset between the html document height and the browser viewport
+   * height will be greater than zero if vertical scroll is possible.
+   * This is the distance the user can scroll
+   */
+  function getDistanceToScroll() {
+    return $(document).height() - $(window).height();
+  }
+
+  function resizeProgressBar() {
+    progressBar.css({ width: getWidthPercentage() + "%" });
+  }
+  // The scroll ratio equals the percentage to resize the bar
+  function getWidthPercentage() {
+    return (getCurrentScrollPosition() / getDistanceToScroll()) * 100;
+  }
+</script>
+
+  </body>
+</html>

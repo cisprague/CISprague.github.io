@@ -29,7 +29,8 @@
 <lastmod>2023-11-03T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>https://cisprague.github.io/drafts/2024-02-09-flow-matching-differential-inclusions/</loc>
+<loc>https://cisprague.github.io/blog/2024/flow-matching-differential-inclusions/</loc>
+<lastmod>2024-02-09T10:00:00+00:00</lastmod>
 </url>
 <url>
 <loc>https://cisprague.github.io/</loc>
@@ -45,5 +46,17 @@
 </url>
 <url>
 <loc>https://cisprague.github.io/repositories/</loc>
+</url>
+<url>
+<loc>https://cisprague.github.io/blog/tag/flow-matching/</loc>
+</url>
+<url>
+<loc>https://cisprague.github.io/blog/tag/generative-models/</loc>
+</url>
+<url>
+<loc>https://cisprague.github.io/blog/tag/control-theory/</loc>
+</url>
+<url>
+<loc>https://cisprague.github.io/blog/2024/</loc>
 </url>
 </urlset>

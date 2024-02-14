@@ -10,9 +10,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Flow matching and differential inclusions | Christopher Iliffe Sprague</title>
+    <title>control-theory | Christopher Iliffe Sprague</title>
     <meta name="author" content="Christopher Iliffe Sprague">
-    <meta name="description" content="An interesting connection between flow matching, differential inclusions, hybrid dynamical systems, and discontinuous dynamical systems..">
+    <meta name="description" content="Personal website of Christopher Iliffe Sprague.
+">
     <meta name="keywords" content="artificial intelligence, generative models">
 
 
@@ -38,7 +39,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="https://cisprague.github.io/drafts/2024-02-09-flow-matching-differential-inclusions/">
+    <link rel="canonical" href="https://cisprague.github.io/blog/tag/control-theory/">
 
     <!-- Dark Mode -->
     
@@ -77,8 +78,8 @@
               </li>
               
               <!-- Blog -->
-              <li class="nav-item ">
-                <a class="nav-link" href="/blog/">Blog</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="/blog/">Blog<span class="sr-only">(current)</span></a>
               </li>
 
               <!-- Other pages -->
@@ -116,103 +117,27 @@
     <!-- Content -->
     <div class="container mt-5">
       
-        <!-- _layouts/post.html -->
-
-<div class="post">
+        <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Flow matching and differential inclusions</h1>
-    <p class="post-meta">February 9, 2024</p>
-    <p class="post-tags">
-      <a href="/blog/2024"> <i class="fas fa-calendar fa-sm"></i> 2024 </a>
-        ·  
-        <a href="/blog/tag/flow-matching-generative-models-control-theory">
-          <i class="fas fa-hashtag fa-sm"></i> flow-matching, generative-models, control-theory</a>  
-          
-
-    </p>
+    <h1 class="post-title"> <i class="fas fa-hashtag fa-sm"></i> control-theory </h1>
+    <p class="post-description"> an archive of posts with this tag </p>
   </header>
 
-  <article class="post-content">
-    
-    <div id="markdown-content">
-      <p>Generative modeling is a fundamental concept in machine learning, where one typically wants to create a model that can generate samples from some complex distribution.
-For example, one might want to generate pictures of golden retrievers given a large dataset of golden retriever pictures.
-In this case, the dataset of golden retriever pictures is theoretically considered to be a set of samples from the distribution of all possible golden retriever pictures.
-The generative model then learns to generate samples from this distribution.</p>
-
-<p>In recent years, diffusion models have become the state-of-the-art model for generative modeling of images.
-These types of models rely on continuous-time dynamics in the form of a stochastic differential equation (SDE):</p>
-
-<p>\begin{equation}\label{eq:sde}
-    \mathrm{d} \mathbf{x} = \mathbf{f}(\mathbf{x}, t) \mathrm{d}t + \mathbf{g}(\mathbf{x}, t) \mathrm{d}\mathbf{w},
-\end{equation}</p>
-
-<p>where \(\mathbf{x} \in \mathbb{R}^n\) is the state of the system, \(\mathbf{f}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\) is the drift term, \(\mathbf{g}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^{n \times n}\) is the diffusion term, and \(\mathbf{w} \in \mathbb{R}^n\) is a Wiener process.</p>
-
-<p>The dynamics of the probability density function (PDF) \(p: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}_{\geq 0}\) of the state of the system is described by the Fokker-Planck-Kolmogorov (FPK) equation:</p>
-
-<p>\begin{equation}\label{eq:fokker-planck}
-    \frac{\partial p(\mathbf{x}, t)}{\partial t} = -\nabla_\mathbf{x} \cdot \left( \mathbf{f}(\mathbf{x}, t) p(\mathbf{x}, t) \right) + \frac{1}{2} \Delta_\mathbf{x} \left( \mathbf{g}(\mathbf{x}, t) \mathbf{g}(\mathbf{x}, t)^\top p(\mathbf{x}, t) \right).
-\end{equation}</p>
-
-<p>Song et al. and Mautsa et al. showed that the FPK equation can be written in the form of a continuity equation:
-\begin{equation}\label{eq:continuity}
-    \frac{\partial p(\mathbf{x}, t)}{\partial t} = -\nabla_\mathbf{x} \cdot \left(\mathbf{v}(\mathbf{x}, t) p(\mathbf{x}, t)\right) 
-\end{equation}
-where the vector field \(\mathbf{v}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\) is given by
-\begin{equation}\label{eq:fpk-vector-field}
-    \mathbf{v}(\mathbf{x}, t) = \mathbf{f}(\mathbf{x}, t) - \frac{1}{2} \nabla_\mathbf{x} \cdot \left(\mathbf{g}(\mathbf{x}, t) \mathbf{g}(\mathbf{x}, t)^\top\right) - \frac{1}{2} \mathbf{g}(x, t) \mathbf{g}(\mathbf{x}, t)^\top \nabla_\mathbf{x} \log p(\mathbf{x}, t),
-\end{equation}
-where \(\nabla_\mathbf{x} \log p(\mathbf{x}, t)\) is well-known “score function” the one tries to learn in diffusion models.</p>
-
-<p>Recently, <strong>flow matching</strong> has been proposed as an alternative to diffusion models for generative modeling, where instead of assuming the structure of the FPK vector field (\ref{eq:fpk-vector-field}), one considers any curl-free vector field \(\mathbf{v}\). Why curl-free? Becuase, according to the Helmholtz decomposition theorem, any vector field can be decomposed into a curl-free and a divergence-free component. The divergence-free component would not affect the behavior of the PDF in the continuity equation (\ref{eq:continuity}), thus there are an infinite number of divergence-free components that can be added to the vector field \(\mathbf{v}\) with the same behavior.</p>
-
-<p>Flow matching relies on the concept of continuous normalizing flows (CNFs), which are composed of a vector field \(\mathbf{v}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\), a flow map \(\mathbf{\psi}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\), and a PDF \(p: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}_{\geq 0}\), such that \((\mathbf{v}, \mathbf{\psi})\) define an ordinary differential equation (ODE)</p>
-
-<p>\begin{equation}\label{eq:ode}
-    \frac{\mathrm{d} \mathbf{\psi}(\mathbf{x}, t)}{\mathrm{d} t} = \mathbf{v}(\mathbf{\psi}(\mathbf{x}, t), t),
-\end{equation}</p>
-
-<p>and \((\mathbf{v}, p)\) define a continuity equation</p>
-
-<p>\begin{equation}\label{eq:continuity-2}
-    \frac{\partial p(\mathbf{x}, t)}{\partial t} = -\nabla_\mathbf{x} \cdot \left(\mathbf{v}(\mathbf{x}, t) p(\mathbf{x}, t)\right).
-\end{equation}</p>
-
-<h2 id="continuous-normalizing-flow-cnf">Continuous Normalizing Flow (CNF)</h2>
-
-<p>A <strong>CNF</strong> is essentially a triplet \((\mathbf{v}, \mathbf{\psi}, p)\) composed of a vector field \(\mathbf{v}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\), a flow map \(\mathbf{\psi}: \mathbb{R}^n   \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n\), and a PDF \(p: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}_{\geq 0}\), such that \((\mathbf{v}, \mathbf{\psi})\) define an ordinary differential equation (ODE) and \((\mathbf{v}, p)\) define a continuity equation:</p>
-
-\[\begin{aligned}
-    \frac{\mathrm{d} \mathbf{\psi}(\mathbf{x}, t)}{\mathrm{d} t} &amp;= \mathbf{v}(\mathbf{\psi}(\mathbf{x}, t), t) \qquad \text{(ODE)}\\
-    \frac{\partial p(\mathbf{x}, t)}{\partial t} &amp;= -\nabla_\mathbf{x} \cdot \left(\mathbf{v}(\mathbf{x}, t) p(\mathbf{x}, t)\right) \qquad \text{(Continuity equation)}
-  \end{aligned}\]
-
-<h3 id="conditional-cnf">Conditional CNF</h3>
-
-<p>In flow matching, one defines a <strong>conditional CNF</strong> \((\mathbf{v}(\cdot \mid \mathbf{x}_1), \mathbf{\psi}(\cdot \mid \mathbf{x}_1), p(\cdot \mid \mathbf{x}_1))\) such that</p>
-
-\[\begin{aligned}
-    \frac{\mathrm{d} \mathbf{\psi}(\mathbf{x}, t \mid \mathbf{x}_1)}{\mathrm{d} t} &amp;= \mathbf{v}(\mathbf{\psi}(\mathbf{x}, t \mid \mathbf{x}_1), t \mid \mathbf{x}_1) \qquad \text{(ODE)}\\
-    \frac{\partial p(\mathbf{x}, t \mid \mathbf{x}_1)}{\partial t} &amp;= -\nabla_\mathbf{x} \cdot \left(\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1) p(\mathbf{x}, t \mid \mathbf{x}_1)\right) \qquad \text{(Continuity equation)} \\
-    \exists T \in \mathbb{R}_{\geq 0} \quad &amp;\text{s.t.} \quad \lim_{t \to T} p(\mathbf{x}, t \mid \mathbf{x}_1) \approx \delta(\mathbf{x} - \mathbf{x}_1) \quad \text{(Data hitting)}
-  \end{aligned}\]
-
-<h3 id="marginal-cnf">Marginal CNF</h3>
-
-<p>We then assume that there is a <strong>marginal CNF</strong> \((\mathbf{v}, \mathbf{\psi}, p)\) such that its PDF is a mixture of the conditional CNF’s PDF:</p>
-
-\[\begin{aligned}
-      \frac{\mathrm{d} \mathbf{\psi}(\mathbf{x}, t)}{\mathrm{d} t} &amp;= \mathbf{v}(\mathbf{\psi}(\mathbf{x}, t), t) \qquad \text{(ODE)}\\
-    \frac{\partial p(\mathbf{x}, t)}{\partial t} &amp;= -\nabla_\mathbf{x} \cdot \left(\mathbf{v}(\mathbf{x}, t) p(\mathbf{x}, t)\right) \qquad \text{(Continuity equation)} \\
-    p(\mathbf{x}, t) &amp;\approx \int p(\mathbf{x} \mid \mathbf{x}_1) q_1(\mathbf{x}_1) \mathrm{d} \mathbf{x}_1 \qquad \text{(Marginal PDF)} \\
-    \mathbf{v}(\mathbf{x}, t) &amp;\approx \frac{1}{p(\mathbf{x}, t)} \int \mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1) p(\mathbf{x}, t \mid \mathbf{x}_1) q_1(\mathbf{x}_1) \mathrm{d} \mathbf{x}_1 \qquad \text{(Marginal VF)}
-  \end{aligned}\]
-
+  <article>
+    <div class="table-responsive">
+      <table class="table table-sm table-borderless">
+        
+        <tr>
+          <th scope="row">Feb 9, 2024</th>
+          <td>
+              <a class="post-link" href="/blog/2024/flow-matching-differential-inclusions/">Flow matching and differential inclusions</a>
+          </td>
+        </tr>
+      
+      </table>
     </div>
   </article>
-
 
 </div>
 
@@ -223,7 +148,7 @@ where \(\nabla_\mathbf{x} \log p(\mathbf{x}, t)\) is well-known “score functio
     <footer class="fixed-bottom">
       <div class="container mt-0">
         © Copyright 2024 Christopher Iliffe Sprague. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme.
-Last updated: February 12, 2024.
+Last updated: February 14, 2024.
       </div>
     </footer>
 
