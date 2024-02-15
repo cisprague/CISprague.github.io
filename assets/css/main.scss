@@ -13,3 +13,7 @@ $max-content-width: {{ site.max_width }};
   "base",
   "distill"
 ;
+
+.math-container {
+  overflow-x: auto; /* Allows scrolling on smaller devices if needed */
+}
