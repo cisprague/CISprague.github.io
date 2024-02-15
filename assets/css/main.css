@@ -1053,5 +1053,8 @@ d-appendix a:hover, d-appendix a.footnote-backlink:hover {
     grid-column: none;
   }
 }
+.math-container {
+  overflow-x: auto; /* Allows scrolling on smaller devices if needed */
+}
 
 /*# sourceMappingURL=main.css.map */
