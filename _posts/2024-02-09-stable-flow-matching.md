@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  Flow matching and differential inclusions
+title:  Stable Flow Matching
 date:   2024-02-09 10:00
-description: An interesting connection between flow matching, differential inclusions, hybrid dynamical systems, and discontinuous dynamical systems..
-tags: flow-matching, generative-models, control-theory
+description: An interesting connection between flow matching, differential inclusions, hybrid dynamical systems, and discontinuous dynamical systems.
+tags: flow-matching, generative-models, control-theory, stability
 ---
 
 
