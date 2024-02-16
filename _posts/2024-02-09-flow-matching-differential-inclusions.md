@@ -7,9 +7,9 @@ tags: flow-matching, generative-models, control-theory
 ---
 
 
-[Generative modeling](https://en.wikipedia.org/wiki/Generative_model) is a fundamental concept in machine learning, where you typically want to create a model that can generate samples from some complex distribution (e.g. golden retreiver images).
-Recently, a new type of generative modelling framework, called [flow matching](https://arxiv.org/abs/2210.02747), has been proposed as an alternative to [diffusion models](https://arxiv.org/abs/2011.13456).
-Flow matching relies on the framework of [continuous normalizing flows (CNFs)](https://arxiv.org/abs/1806.07366), where you learn a model of a time-dependent [vector field](https://en.wikipedia.org/wiki/Vector_field) $$\mathbf{v}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n$$ and then use it to transport samples from a simple distribution $$q_0$$ (e.g. a [normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution)) to samples of a more complex distribution $$q_1$$ (e.g. golden retreiver images), like I have shown below with my fantastic artistic skills...
+[Generative modeling](https://en.wikipedia.org/wiki/Generative_model) is a fundamental concept in machine learning, where you typically want to create a model that can generate samples from some complex distribution.
+Recently, a new type of generative modeling framework, called [flow matching](https://arxiv.org/abs/2210.02747), has been proposed as an alternative to [diffusion models](https://arxiv.org/abs/2011.13456).
+Flow matching relies on the framework of [continuous normalizing flows (CNFs)](https://arxiv.org/abs/1806.07366), where you learn a model of a time-dependent [vector field (VF)](https://en.wikipedia.org/wiki/Vector_field) $$\mathbf{v}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n$$ and then use it to transport samples from a simple distribution $$q_0$$ (e.g. a [normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution)) to samples of a more complex distribution $$q_1$$ (e.g. golden retriever images), like I have shown below with my fantastic artistic skills...
 
 <figure style="text-align: center;">
   <img src="../../../assets/img/transport.jpg" alt="Probability distributions" title="Probability distributions" width="90%">
@@ -28,12 +28,12 @@ where $$p : \mathbb{R}^n \times \mathbb{R}_{\geq0} \to \mathbb{R}_{\geq 0}$$ is 
 In our case, this "mass" is just the total probability of the space, which is $$\int_{\mathcal{X}} p(\mathbf{x}, t) \mathrm{d}\mathbf{x} = 1$$ for [probability density functions (PDFs)](https://en.wikipedia.org/wiki/Probability_density_function). See another fantastic art piece below for an illustration.
 
 <figure style="text-align: center;">
-  <img src="../../../assets/img/continuity.jpg" alt="Probability distributions" title="Probability distributions" width="90%">
+  <img src="../../../assets/img/continuity.jpg" width="90%">
   <figcaption><strong>Figure</strong>: The continuity equation preserves the total mass of the PDF!</figcaption>
 </figure>
 
-So, if the vector field and PDF $$(\mathbf{v}, p)$$ satisfy the continuity equation, then we can say that $$\mathbf{v}$$ generates $$p$$.
-This also means that the well-known change-of-variables equation is satisfied (see chapter 1 of Villani's [book on optimal transport](https://link.springer.com/book/10.1007/978-3-540-71050-9) for details):
+So, if the VF and PDF $$(\mathbf{v}, p)$$ satisfy the continuity equation, then we can say that $$\mathbf{v}$$ generates $$p$$.
+This also means that the well-known change-of-variables equation is satisfied (see Chapter 1 of Villani's [book on optimal transport](https://link.springer.com/book/10.1007/978-3-540-71050-9) for details):
 
 <div class="math-container">
 $$
@@ -41,7 +41,7 @@ $$
 $$
 </div>
 
-where $$\mathbf{\phi} : \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n$$ is a [flow map](https://en.wikipedia.org/wiki/Flow_(mathematics)) (or [integral curve](https://en.wikipedia.org/wiki/Integral_curve)) of $$\mathbf{v}$$ starting from $$\mathbf{x}$$, defining an [ordinary differential equation (ODE)](https://en.wikipedia.org/wiki/Ordinary_differential_equation)
+where $$\mathbf{\phi}: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}^n$$ is a [flow map](https://en.wikipedia.org/wiki/Flow_(mathematics)) (or [integral curve](https://en.wikipedia.org/wiki/Integral_curve)) of $$\mathbf{v}$$ starting from $$\mathbf{x}$$, defining an [ordinary differential equation (ODE)](https://en.wikipedia.org/wiki/Ordinary_differential_equation)
 
 <div class="math-container">
 $$
@@ -107,7 +107,7 @@ $$
 </div>
 
 
-Based on the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$, the FM authors showed that we can train to match the conditional VFs:
+Based on the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$, the FM authors showed that we can train an NN VF $$\mathbf{v}_\theta$$ to match the conditional VFs:
 
 <div class="math-container">
 $$
@@ -120,14 +120,13 @@ $$
 </div>
 
 where $$L_\text{FM}$$ matches the NN VF to the unknown desired VF $$\mathbf{v}(\mathbf{x}, t)$$ (what we originally wanted to do) and $$L_\text{CFM}$$ matches the NN VF to the conditional VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$.
-Since their gradients are equal, minimising them should, in theory, result in the same NN VF $$\mathbf{v}_\theta(\mathbf{x}, t)$$.
+Since their gradients are equal, minimizing them should, in theory, result in the same NN VF $$\mathbf{v}_\theta(\mathbf{x}, t)$$.
 Check Theorem 1 and Theorem 2 of the [FM paper](https://arxiv.org/abs/2210.02747) to see the original proof of the marginal VF and CFM loss equivalence.
-
 
 The interesting thing about the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ is that, similar to the marginal PDF $$p(\mathbf{x}, t)$$, it is a mixture of conditinonal VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$.
 What does this "[mixture](https://en.wikipedia.org/wiki/Mixture_distribution)" actually mean?
-In the case of the marginal PDF $$p(\mathbf{x}, t)$$, this mixture is just the marginalisation of the conditional PDFs $$p(\mathbf{x}, t \mid \mathbf{x}_1)$$ over all samples of the complex distribution $$\mathbf{x}_1 \sim q_1$$.
-But, for the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$, it is a bit less clear, but qualitatively it must be some weighted combination of the conditinonal VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$. Let's take a look at the terms in the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ expression, other than the conditional VF:
+In the case of the marginal PDF $$p(\mathbf{x}, t)$$, this mixture is just the marginalization of the conditional PDFs $$p(\mathbf{x}, t \mid \mathbf{x}_1)$$ over all samples of the complex distribution $$\mathbf{x}_1 \sim q_1$$.
+But, for the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$, it is a bit less clear, but qualitatively it must be some weighted combination of the conditional VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$. Let's take a look at the terms in the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ expression other than the conditional VF:
 
 <div class="math-container">
 $$
@@ -135,8 +134,8 @@ $$
 $$
 </div>
 
-This means that, in fact, the marginal VF is a [convex combination](https://en.wikipedia.org/wiki/Convex_combination) of the conditional VFs, where the weights are all positive (PDFs are always positive) and the weights sum to $$1$$.
-Since the marginal VF admits a flow map, we then have a [differential inclusion](https://en.wikipedia.org/wiki/Differential_inclusion):
+This means that, in fact, the marginal VF is a [convex combination](https://en.wikipedia.org/wiki/Convex_combination) of the conditional VFs, where the weights are all positive (PDFs are always positive) and sum to $$1$$.
+Since the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ admits a flow map $$\mathbf{\phi}(\mathbf{x}, t)$$,  we then have a [differential inclusion](https://en.wikipedia.org/wiki/Differential_inclusion):
 
 <div class="math-container">
 $$
@@ -152,19 +151,19 @@ Take a look at the red vectors in the drawing below; the set of all positively w
   <figcaption><strong>Figure</strong>: The marginal VF lies in some convex combination of the conditional VFs (red).</figcaption>
 </figure>
 
-Differential inclusions were introduced in the 1960s by [Filippov (Филиппов)](https://en.wikipedia.org/wiki/Aleksei_Filippov_(mathematician)) as a way to characterise solutions to ODEs with discontinuous VFs (see Filippov's [book on differential inclusions](https://link.springer.com/book/10.1007/978-94-015-7793-9)).
+Differential inclusions were introduced in the 1960s by [Filippov (Филиппов)](https://en.wikipedia.org/wiki/Aleksei_Filippov_(mathematician)) as a way to characterize solutions to ODEs with discontinuous VFs (see Filippov's [book on differential inclusions](https://link.springer.com/book/10.1007/978-94-015-7793-9)).
 They are an integral part of discontinuous dynamical systems (DDSs), where several VFs interface on a partitioned domain (see my drawing below).
-See Cortes' [article on DDSs](https://ieeexplore.ieee.org/abstract/document/4518905) for a complete description.
+I recommend Cortes' [article on DDSs](https://ieeexplore.ieee.org/abstract/document/4518905) for a complete description.
 
-DDSs with differential inclusions are commonplace in [hybrid dynamical systems (HDSs)](https://en.wikipedia.org/wiki/Hybrid_system), such as switched systems or [behavior trees (BTs)](https://arxiv.org/abs/2109.01575) (shamless plug to my PhD research).
+DDSs with differential inclusions are commonplace in [hybrid dynamical systems (HDSs)](https://en.wikipedia.org/wiki/Hybrid_system), such as switched systems or [behavior trees (BTs)](https://arxiv.org/abs/2109.01575) (shameless plug to my PhD research).
 For a complete description, I recommend this [article on HDSs](https://ieeexplore.ieee.org/document/4806347) by Goebel, Sanfelice, and Teel; and this [article on switched systems](http://liberzon.csl.illinois.edu/teaching/Liberzon-LectureNotes.pdf) by Liberzon.
 
-Switched systems are of particular relevence to the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ discussed above.
+Switched systems are of particular relevance to the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ discussed above.
 In switched systems, there is a "switching signal" $$\sigma$$ that indicates which VF to use (the conditional VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$ in our case).
 This signal may be state-dependent $$\sigma: \mathbb{R}^n \to \mathbb{N}$$ or time-dependent $$\sigma: \mathbb{R}_{\geq 0} \to \mathbb{N}$$, where $$\mathbb{N}$$ (natural numbers) contains the index set of the individual VFs (or "subsystems").
-If we adapt this to work with the conditional VFs above, the switching signal would map like $$\sigma: \mathbb{R}^n \to \mathrm{supp}(q_1)$$ for the state-dependent case and $$\sigma: \mathbb{R}_{\geq 0} \to \mathrm{supp}(q_1)$$ for the time-dependent case, where $$\mathrm{supp}(q_1)$$ is the support of the complex PDF (i.e. where it is positive).
+If we adapt this to work with the conditional VFs above, the switching signal would map like $$\sigma: \mathbb{R}^n \to \mathrm{supp}(q_1)$$ for the state-dependent case and $$\sigma: \mathbb{R}_{\geq 0} \to \mathrm{supp}(q_1)$$ for the time-dependent case, where $$\mathrm{supp}(q_1)$$ is the support of the complex PDF (i.e. where there is non-zero probability).
 
-If it is only state-dependent, then we end up with a DDS that looks like the picture below, where the conditional VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$ are assigned to each partition of the domain, i.e.:
+If the switching signal is only state-dependent, then we end up with a DDS that looks like the picture below, where the conditional VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$ are assigned to each partition of the domain, i.e.:
 
 <div class="math-container">
 $$
@@ -182,17 +181,17 @@ In the time-dependent case, the switching signal defines a schedule of switching
 
 <div class="math-container">
 $$
- \frac{\mathrm{d} \mathbf{\phi}(\mathbf{x}, t)}{\mathrm{d} t} = \mathbf{v}(\mathbf{\phi}(\mathbf{x}, t), t \mid \sigma(t))
+ \frac{\mathrm{d} \mathbf{\phi}(\mathbf{x}, t)}{\mathrm{d} t} = \mathbf{v}(\mathbf{\phi}(\mathbf{x}, t), t \mid \sigma(t)).
 $$
 </div>
 
-Here the switching signal $$\sigma(t)$$ can be viewed as an open-loop control policy that we design or that we do not know (comes from external disturbances).
+Here the switching signal $$\sigma(t)$$ can be viewed as an open-loop control policy that we design or that we do not know (could come from external disturbances).
 A crucial problem in switched systems is determining whether the system will be stable to some desired state (i.e. converges to the state and stays there).
 In our case, we would want the flow map to be stable to samples of the complex distribution.
 
-Now let's assume that we do not know the switching signal. In this case, it suffices to show "**stability under arbitrary switching**" (see chapter 4 of Liberzon's [article on switched systems](http://liberzon.csl.illinois.edu/teaching/Liberzon-LectureNotes.pdf)), which is essentially showing stability of the differential inclusion.
-If we can prove that all convex combinations of the conditional VFs are stable, then we can prove that the marginal VF is stable.
-See the drawing below, where there is a convex combination of two 2D linear VFs. Every flow map of every convex combination of these VFs will  converge exponentially to the manifold in blue, which we can imagine as the support of the complex PDF $$q_1$$.
+Now let's assume that we do not know the switching signal. In this case, it suffices to show "**stability under arbitrary switching**" (see chapter 4 of Liberzon's [article on switched systems](http://liberzon.csl.illinois.edu/teaching/Liberzon-LectureNotes.pdf)), which essentially shows the stability of the differential inclusion.
+If we can prove that all convex combinations of the conditional VFs $$\mathbf{v}(\mathbf{x}, t \mid \mathbf{x}_1)$$ are stable, then we can prove that the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ is stable.
+See the drawing below, where there is a convex combination of two 2D linear VFs. Every flow map $$\mathbf{\phi}(\mathbf{x}, t)$$ of every convex combination of these VFs will converge exponentially to the manifold in blue, which we can imagine as the support of the complex PDF $$q_1$$.
 
 <figure style="text-align: center;">
   <img src="../../../assets/img/convex_vf.jpg" width="90%">
@@ -202,10 +201,10 @@ See the drawing below, where there is a convex combination of two 2D linear VFs.
 
 Now, why would we care about stability in generative models?
 Well, of course we would want the flow maps $$\mathbf{\phi}(\mathbf{x}, t)$$ of the VF $$\mathbf{v}(\mathbf{x}, t)$$ to converge to samples of the complex distribution $$\mathbf{x}_1 \sim q_1$$.
-But, in some applications, it may also be desirable to have it so that the flow maps stay stable to the samples.
-For instance, in the context of structural biology, we may want to use a generative model the predict how a given [ligand](https://en.wikipedia.org/wiki/Ligand) (e.g. [serotonin](https://en.wikipedia.org/wiki/Serotonin)) binds to a given [receptor](https://en.wikipedia.org/wiki/Receptor_(biochemistry)) (i.e. a protein, e.g. the [serotonin receptor](https://en.wikipedia.org/wiki/5-HT_receptor)).
-It is well-known in structural biology that molecular binding configurations represent minima of a "free energy landscape".
-It is also well-known in control theory that energy can often be used as an effective [Lyapunov function](https://en.wikipedia.org/wiki/Lyapunov_function) $$V: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}_{\geq 0}$$, which is just a scalar function that can be used to certify that the VF is stable within some region $$\mathcal{B}$$.
+But, in some applications, it may also be desirable to have it so that the flow maps $$\mathbf{\phi}(\mathbf{x}, t)$$ stay stable to the samples $$\mathbf{x}_1 \sim q_1$$.
+For instance, in the context of structural biology, we may want to use a generative model the predict how a given [ligand](https://en.wikipedia.org/wiki/Ligand) (e.g. [serotonin](https://en.wikipedia.org/wiki/Serotonin)) binds to a given [receptor](https://en.wikipedia.org/wiki/Receptor_(biochemistry)) (e.g. the [serotonin receptor](https://en.wikipedia.org/wiki/5-HT_receptor)).
+It is well-known in structural biology that molecular binding configurations represent minima of a "[free energy landscape](https://en.wikipedia.org/wiki/Folding_funnel)".
+It is also well-known in control theory that energy can often be used as an effective [Lyapunov function](https://en.wikipedia.org/wiki/Lyapunov_function) $$V: \mathbb{R}^n \times \mathbb{R}_{\geq 0} \to \mathbb{R}_{\geq 0}$$, which is just a scalar function that can be used to certify that the VF $$\mathbf{v}(\mathbf{x}, t)$$ is stable within some region $$\mathcal{B}$$.
 To be a Lyapunov function on a region $$\mathcal{B} \subset \mathbb{R}^n$$, we need to have the following for all $$(\mathbf{x}, t) \in \mathcal{B} \times \mathbb{R}_{\geq 0}$$:
 
 <div class="math-container">
@@ -214,9 +213,9 @@ $$
 $$
 </div>
 
-Of course, if the marginal VF just follows the negative gradient of this function, i.e. $$\mathbf{v}(\mathbf{x}, t) = -\nabla_\mathbf{x} V(\mathbf{x}, t)$$ (a gradient flow), then the second term will be negative.
-The hard bit is ensuring that the first term is negative, which could normally be achieved by making the marginal VF time-independent.
-However, even if we make the conditional VFs time-indepedent, the marginal VF will still be time-dependent due to the dependence on the conditional and marginal PDF:
+Of course, if the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ just follows the negative gradient of this function, i.e. $$\mathbf{v}(\mathbf{x}, t) = -\nabla_\mathbf{x} V(\mathbf{x}, t)$$ (a gradient flow), then the second term will be negative.
+The hard bit is ensuring that the first term with the time derivative is negative, which could normally be achieved by making the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ time-independent.
+However, even if we make the conditional VFs time-independent, i.e. $$\mathbf{v}(\mathbf{x} \mid \mathbf{x}_1)$$, the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ will still be time-dependent due to the dependence on the conditional $$p(\mathbf{x}, t \mid \mathbf{x}_1)$$ and marginal PDF $$p(\mathbf{x}, t)$$:
 
 <div class="math-container">
 $$
@@ -224,8 +223,8 @@ $$
 $$
 </div>
 
-Assume for the moment, though, that there does exists an free-energy function satisfying the Lyapunov condition.
-Then, in the context of ligand-receptor binding, we could have something like in the drawing below, where the marginal VF follows the negative gradient of a mixture of Lyapunov functions.
+Assume for the moment, though, that there does exist a free-energy function $$V(\mathbf{x}, t)$$ satisfying the Lyapunov condition.
+Then, in the context of ligand-receptor binding, we could have something like in the drawing below, where the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ follows the negative gradient of a mixture of Lyapunov functions.
 
 
 <figure style="text-align: center;">
@@ -234,7 +233,7 @@ Then, in the context of ligand-receptor binding, we could have something like in
   </figcaption>
 </figure>
 
-This interpretation is useful, as it is often assumed in structural biology that data follows a [Boltzmann-like distribution](https://en.wikipedia.org/wiki/Boltzmann_distribution), e.g. 
+This interpretation is useful, as it is often assumed in structural biology that data follows a [Boltzmann-like distribution](https://en.wikipedia.org/wiki/Boltzmann_distribution): 
 
 <div class="math-container">
 $$
@@ -242,7 +241,7 @@ $$
 $$
 </div>
 
-If this is true, and our flow maps are following the negative gradient of the energy\Lyapunov function $$V(\mathbf{x}, t)$$, then it is easy to see that they also follow the gradient of log probability (shown in the drawing below):
+If this is true, and our flow maps $$\mathbf{\phi}(\mathbf{x}, t)$$ are following the negative gradient of the energy function $$V(\mathbf{x}, t)$$, then it is easy to see that they also follow the gradient of log probability $$\log(p(\mathbf{x}, t))$$ (shown in the drawing below):
 
 <div class="math-container">
 $$
@@ -262,13 +261,14 @@ $$
 Now, why is this interpretation useful?
 It is well-known that ligands can bind to receptors in different ways.
 E.g., in the context of drugs, there are [orthosteric and allosteric sites](https://en.wikipedia.org/wiki/Allosteric_modulator) where drugs can bind.
-Orthosteric sites are where endogenous drugs ([agonist](https://en.wikipedia.org/wiki/Agonist)) bind; e.g. serotonin is the endogenous agonist of the serotonin receptor.
+Orthosteric sites are where endogenous drugs ([agonists](https://en.wikipedia.org/wiki/Agonist)) bind; e.g. serotonin is the endogenous agonist of the serotonin receptor.
 Allosteric sites are sites other than the orthosteric site, and they are of increasing interest because they allow for specific [allosteric modulation](https://en.wikipedia.org/wiki/Allosteric_modulator).
-The problem, however, is that data of allosteric binding is not as common as orthosteric binding, so NN models would most likely be biased towards orthosteric sites.
-It is well-known in machine learning that inductive biases can help learning performance when there is not much data.
-Energy seems like it could be a useful inductive bias to "bake" into the latent representation of models that are used to generate data corresponding to energy minima.
+The problem, however, is that allosteric binding data is not as common as orthosteric binding data, so NN models would most likely be biased toward orthosteric sites.
+It is well-known in machine learning that [inductive biases](https://en.wikipedia.org/wiki/Inductive_bias) can help learning performance when there is a lack of data.
+Energy could be a useful inductive bias to "bake" into the latent representation of models that are used to generate data corresponding to energy minima.
 
-In our new [preprint](https://arxiv.org/abs/2402.05774), we show how to make the marginal VF time-independent to allow for the type of stability we just discussed!
+However, as mentioned before, the time-dependence of the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ makes it difficult to ensure that the flow maps $$\mathbf{\phi}(\mathbf{x}, t)$$ are stable to the complex distribution $$q_1$$.
+In our new [preprint](https://arxiv.org/abs/2402.05774), we show how to make the marginal VF $$\mathbf{v}(\mathbf{x}, t)$$ time-independent to allow for the type of stability we just discussed! If you would like to cite this blog post, please use the following BibTeX entry.
 
 ```
 @article{sprague2024stable,
